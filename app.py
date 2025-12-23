@@ -2,7 +2,6 @@ import re
 import pandas as pd
 import streamlit as st
 from datetime import datetime, timedelta, timezone
-from urllib.parse import urlparse, parse_qs
 from google_play_scraper import reviews, Sort
 
 
