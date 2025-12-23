@@ -1,0 +1,4 @@
+streamlit
+google-play-scraper
+pandas
+python-dateutil
