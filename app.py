@@ -243,7 +243,7 @@ def star_counts(df: pd.DataFrame):
     return counts
 
 
-def style_by_star_background(styler: pd.io.formats.style.Styler):
+def style_by_star_background(styler):
     # background highlight (more visible than font-only)
     def row_style(row):
         star = row.get("Star", None)
