@@ -9,6 +9,53 @@ from google_play_scraper import reviews, Sort
 from google_play_scraper import app as gp_app
 
 
+import streamlit as st
+
+
+# ==========================================================
+# LOGIN SCREEN
+# ==========================================================
+
+def login_screen():
+    # ✅ Already logged in
+    if st.session_state.get("logged_in"):
+        return True
+
+    st.markdown("## 🔒 Login Required")
+    st.caption("Enter your username and password to access this tool.")
+
+    # ✅ Username field on a new line (small width)
+    col1, col2 = st.columns([1.2, 3])
+    with col1:
+        username = st.text_input("Username", placeholder="admin")
+
+    # ✅ Password field on a new line (small width)
+    col3, col4 = st.columns([1.2, 3])
+    with col3:
+        password = st.text_input("Password", type="password", placeholder="admin")
+
+    # ✅ Small Login button (not full width)
+    # btn_col1, btn_col2, btn_col3 = st.columns([1, 1, 1])
+    # with btn_col2:
+        login_btn = st.button("Login", type="primary", use_container_width=True)
+
+    if login_btn:
+        if username == "admin" and password == "admin":
+            st.session_state["logged_in"] = True
+            st.success("✅ Login successful! Loading tool...")
+            st.rerun()
+        else:
+            st.error("❌ Incorrect username or password")
+
+    return False
+
+# if st.session_state.get("logged_in"):
+#     top1, top2 = st.columns([5, 1])
+#     with top2:
+#         if st.button("Logout", use_container_width=True):
+#             st.session_state["logged_in"] = False
+#             st.rerun()
+
 # ==========================================================
 # SETTINGS
 # ==========================================================
@@ -349,19 +396,56 @@ GOOGLE_APPS = {
             "Kids Music: Piano, Xylo, Drums": "com.rvappstudios.kids.games.music.baby.piano.songs.lucas.and.friends",
     },
     "Parents Games": {
-    "Jigsaw Puzzles: Picture Puzzle": "com.rvappstudios.jigsaw.puzzles",
-    "Veggies Cut: Logic Puzzle Game": "com.rvappstudios.veggies.cut.logic.puzzle.adult.game",
-    "Tangram Puzzle: Polygrams Game": "com.rvappstudios.tangram.blocks.puzzle.brain.games",
+"Balloon Pop: Match 3 Games": "com.rvappstudios.match3_balloon_puzzle_game",
+"Basketball Games: Hoop Puzzles": "com.rvappstudios.basketball",
+"Block Puzzle: Block Games": "com.rvappstudios.block.jigsaw.puzzle.game.hexa.color",
+"Block Puzzles: Hexa Block Game": "com.rvappstudios.block.puzzle.games.classic.board",
+"Bloody Monsters: Bouncy Bullet": "com.rvappstudios.bloodymonsters",
+"Bubble Crusher: Bubble Pop": "com.rvappstudios.bubblecrusher2",
+"Bubble Pop: Bubble Shooter": "com.rvappstudios.bubble.shooter.shoot.bubbles",
+"Bubble Shooter: Pastry Pop": "com.rvappstudios.bubble.pop.bubble.shooter.puzzle.game.match3",
+"Cake Blast: Match 3 Games": "com.rvappstudios.cake.match3.puzzle.game",
+"Christmas Cookie: Match 3 Game": "com.rvappstudios.christmascookie",
+"Dice Puzzle - Dice Merge Game": "com.rvappstudios.dice.games.merge.puzzle",
+"Find The Difference: Find It": "com.rvappstudios.find.odd.one.out.spot.puzzle.game",
+"Find The Differences - Spot it": "com.rvappstudios.puzzle.game.find.difference.ftd",
+"Finger Slayer": "com.rvappstudios.fingerslayer",
+"Fruit Cube Blast": "com.rvappstudios.tap.blast.match3.puzzle",
+"Gummy Paradise: Match 3 Games": "com.rvappstudios.gummy.paradise.drag.match",
+"Ice Cream Paradise: Match 3": "com.rvappstudios.ice.cream.paradise.match3",
+"Jewel Gems: Jewel Games": "com.rvappstudios.jewel.gem.tap.cube.blast.puzzle.match3.game",
+"Jigsaw Puzzles Blocks": "com.rvappstudios.tangram.jigsaw.puzzles.block.game",
+"Jigsaw Puzzles Hexa": "com.rvappstudios.hexa.jigsaw.puzzle.block.game",
+"Jigsaw Puzzles: Picture Puzzle": "com.rvappstudios.jigsaw.puzzles",
+"Match Tiles: Block Puzzle Game": "com.rvappstudios.tile.match3.block.puzzle.game",
+"Maze Games: Labyrinth Puzzles": "com.rvappstudios.maze.games.puzzle.mazes.labyrinth",
+"Onnet Connect: Tile Matching": "com.rvappstudios.tile.connect.link.puzzle.game",
+"Puzzles: Jigsaw Puzzle Games": "com.rvappstudios.jigsaw.puzzles.picture.block.games",
+"Tangram Puzzle: Polygrams Game": "com.rvappstudios.tangram.blocks.puzzle.brain.games",
+"Tile Puzzle Game: Tiles Match": "com.rvappstudios.tile.match.tiles.puzzle.game",
+"Veggies Cut: Logic Puzzle Game": "com.rvappstudios.veggies.cut.logic.puzzle.adult.game",
+"Word Pics - Word Games": "com.rvappstudios.two.pics.one.word.puzzle.game",
+"Word Puzzle: Word Games": "com.rvappstudios.four.pics.one.word.pic.to.words.puzzle.game",
+"Word Search Games: Word Find": "com.rvappstudios.word.search.puzzle.game",
+"Word Spin: Word Games": "com.rvappstudios.pic.word.games.guess.picture.puzzle",
+"Zombie Heroes: Zombie Games": "com.rvappstudios.lastheroes",
+"Zombie Ragdoll - Zombie Games": "com.rvappstudios.zombieragdoll",
+"Zombie Shooting: Archery Games": "com.rvappstudios.archeryblitz1",
+"Zombie Slice: Zombie Games": "com.rvappstudios.zombiecarnage",
 },
     "Applications": {
-"App Locker: Privacy Apps Lock": "=com.rvappstudios.applock.protect.lock.app",
-"Duplicate File Remover": "com.rvappstudios.duplicate.similar.files.photo.finder.cleaner",
-"Phone Storage Cleaner: Cleanup": "com.rvappstudios.phone.storage.cleaner.disk.space.cleanup.duplicate.remover",
-"Smart Calc: Daily Calculator": "com.rvappstudios.calculator.free.app",
-"Magnifying Glass + Flashlight": "com.rvappstudios.magnifyingglass",
-"Flash Alert: Call & SMS": "com.rvappstudios.Flash.Alerts.LED.Call.SMS.Flashlight",
 "Alarm Clock: Mornings & Naps": "com.rvappstudios.alarm.clock.smart.sleep.timer.music",
-
+"App Locker: Privacy Apps Lock": "com.rvappstudios.applock.protect.lock.app",
+"Digital Compass: Map & GPS": "com.rvappstudios.compass.offline.direction",
+"Flash Alerts LED - Call, SMS": "com.rvappstudios.Flash.Alerts.LED.Call.SMS.Flashlight",
+"Flashlight: Torch Light": "com.rvappstudios.flashlight",
+"Kids App Lock: Parental Lock": "com.rvappstudios.child.lock.kids.parental.control.free",
+"Magnifying Glass + Flashlight": "com.rvappstudios.magnifyingglass",
+"Mirror: Beauty Camera": "com.rvappstudios.mirror",
+"QR Scanner and Generator": "com.rvappstudios.qr.barcode.scanner.reader.generator",
+"Sleep Timer: Turn Music Off": "com.rvappstudios.sleep.timer.off.music.relax",
+"Smart Calc: Daily Calculator": "com.rvappstudios.calculator.free.app",
+"Stopwatch and Timer": "com.rvappstudios.timer.multiple.alarm.stopwatch",
     }
 }
 
@@ -791,24 +875,29 @@ def fetch_amazon_reviews(asin: str, max_pages: int = 3):
 st.set_page_config(page_title="RV AppStudios - Store Reviews Tool", layout="wide")
 inject_css()
 
+if not login_screen():
+    st.stop()
+
 st.markdown('<div class="rv-title">RV AppStudios - Store Reviews Tool</div>', unsafe_allow_html=True)
-st.markdown('<div class="rv-subtitle">Choose Category and Date Range globally. Then fetch and filter reviews per store.</div>', unsafe_allow_html=True)
+# st.markdown('<div class="rv-subtitle">Choose Category and Date Range globally. Then fetch and filter reviews per store.</div>', unsafe_allow_html=True)
+st.markdown('<div class="rv-subtitle"></div>', unsafe_allow_html=True)
+
 
 # Premium Global Filters
-st.markdown(
-    """
-    <div class="rv-card" style="padding: 16px 18px; margin-bottom: 12px;">
-      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-        <div>
-          <div style="font-size:15px; font-weight:950; margin-bottom:2px;">Global Filters</div>
-          <div class="rv-muted">Applies across all stores (Google, Apple, Microsoft, Amazon)</div>
-        </div>
-      </div>
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
+# st.markdown(
+#     """
+#     <div class="rv-card" style="padding: 16px 18px; margin-bottom: 12px;">
+#       <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+#         <div>
+#           <div style="font-size:15px; font-weight:950; margin-bottom:2px;">Global Filters</div>
+#           <div class="rv-muted">Applies across all stores (Google, Apple, Microsoft, Amazon)</div>
+#         </div>
+#       </div>
+#     </div>
+#     """,
+#     unsafe_allow_html=True,
+# )
+#
 row1, row2 = st.columns([1.25, 1.75], gap="large")
 
 with row1:
@@ -823,28 +912,10 @@ with row2:
 
 global_start_dt, global_end_dt, global_range_label, global_days_selected = parse_date_range(global_date_range)
 
-st.markdown(
-    f"""
-    <div class="rv-card" style="padding: 12px 16px;">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div>
-                <div style="font-size:14px; font-weight:950; margin-bottom:2px;">Selected</div>
-                <div class="rv-muted">{global_range_label}</div>
-            </div>
-            <div style="
-                background: rgba(0,0,0,0.06);
-                border: 1px solid rgba(0,0,0,0.10);
-                padding: 10px 14px;
-                border-radius: 14px;
-                font-weight: 950;
-                font-size: 13px;">
-                {global_days_selected} days
-            </div>
-        </div>
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
+# st.caption(f"Days selected: {global_days_selected}")
+# st.markdown(f"**{global_range_label}**")
+st.markdown(f"###### 📅 **{global_range_label}" f" - Days selected: {global_days_selected}**")
+
 
 # Premium Tabs
 tab_google, tab_apple, tab_microsoft, tab_amazon = st.tabs([
@@ -862,15 +933,14 @@ tab_google, tab_apple, tab_microsoft, tab_amazon = st.tabs([
 def dashboard_tab(store_label, store_apps_by_category, link_label, link_placeholder, extract_id_fn,
                   fetch_fn, info_fn, session_key, note=""):
 
-    st.markdown(f"## {store_label}")
     if note:
         st.caption(note)
-    st.write("")
 
-    c1, c2, c3 = st.columns([1.55, 1.05, 1.10], gap="large")
+    # --- Top row: App selection + Filters ---
+    c1, c2 = st.columns([1.55, 1.10], gap="large")
 
     with c1:
-        st.markdown("### App Selection")
+        st.markdown("#### App Selection")
         mode = st.radio(
             "Select input type",
             ["Dropdown (recommended)", f"Paste {link_label}"],
@@ -898,7 +968,7 @@ def dashboard_tab(store_label, store_apps_by_category, link_label, link_placehol
                 return
 
     with c2:
-        st.markdown("### Filters")
+        st.markdown("#### Filters")
         star_filter = st.multiselect(
             "Stars",
             [1, 2, 3, 4, 5],
@@ -913,23 +983,37 @@ def dashboard_tab(store_label, store_apps_by_category, link_label, link_placehol
             key=f"{session_key}_search"
         )
 
-    with c3:
-        st.markdown("### Fetch")
-        st.markdown(f"**{global_range_label}**")
-        st.caption(f"Days selected: {global_days_selected}")
+    # ✅ Centered Date Range Display (Premium)
+    st.markdown(
+        f"""
+        <div style="text-align:center; margin-top: 0px; margin-bottom: 0px;">
+            <div style="font-weight: 450; font-size: 15px;">
+                {global_range_label} (Last {global_days_selected} Days)
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
+    # ✅ Centered Fetch Button BELOW middle (as you requested)
+    st.write("")
+    center1, center2, center3 = st.columns([1.6, 2.2, 1.6])
+    with center2:
         fetch_clicked = st.button(
-            "Fetch Reviews",
+            "🚀 Fetch Reviews",
             type="primary",
             use_container_width=True,
             key=f"{session_key}_fetch"
         )
+    # st.write("")
 
     st.divider()
 
+    # --- Session state storage ---
     if session_key not in st.session_state:
         st.session_state[session_key] = pd.DataFrame()
 
+    # --- Fetch and store ---
     if fetch_clicked:
         try:
             with st.spinner(f"Fetching {store_label} reviews..."):
@@ -939,6 +1023,7 @@ def dashboard_tab(store_label, store_apps_by_category, link_label, link_placehol
 
     raw_df = st.session_state[session_key].copy()
 
+    # --- App icon + name header after fetch ---
     if not raw_df.empty and info_fn:
         info = info_fn(app_id)
         colx, coly = st.columns([0.12, 0.88], gap="large")
@@ -947,15 +1032,17 @@ def dashboard_tab(store_label, store_apps_by_category, link_label, link_placehol
                 st.image(info["icon"], width=80)
         with coly:
             st.markdown(f"### {info.get('title', '')}")
-            st.caption(f"{store_label} • {global_range_label} • Category: {global_category}")
-        st.write("")
-
+            # st.caption(f"{store_label} • {global_range_label} • Category: {global_category}")
+            st.caption(f"{store_label} • {global_range_label}")
+    # --- Format + filters ---
     df = standardize_table(raw_df) if not raw_df.empty else pd.DataFrame()
     filtered = apply_filters(df, star_filter, search_text)
 
     st.markdown("### Star counts")
     show_star_metrics(df)
-    st.write("")
+
+    # st.write("")
+    st.divider()
 
     st.markdown("### Reviews")
     if df.empty:
@@ -972,14 +1059,14 @@ def dashboard_tab(store_label, store_apps_by_category, link_label, link_placehol
             use_container_width=True,
         )
 
-
 # Run tabs
 with tab_google:
     dashboard_tab(
         store_label="Google Play Reviews",
         store_apps_by_category=GOOGLE_APPS,
         link_label="Play Store link",
-        link_placeholder="https://play.google.com/store/apps/details?id=com.example.app",
+        # link_placeholder="https://play.google.com/store/apps/details?id=com.example.app",
+         link_placeholder="https://play.google.com/store/apps/details?id=com.dreamgames.royalmatch",
         extract_id_fn=package_from_play_url,
         fetch_fn=fetch_google_all_countries,
         info_fn=get_google_app_info,
@@ -991,7 +1078,8 @@ with tab_apple:
         store_label="Apple App Store Reviews",
         store_apps_by_category=APPLE_APPS,
         link_label="App Store link",
-        link_placeholder="https://apps.apple.com/app/anything/id123456789",
+        # link_placeholder="https://apps.apple.com/app/anything/id123456789",
+        link_placeholder="https://apps.apple.com/us/app/royal-match/id1482155847",
         extract_id_fn=apple_app_id_from_url,
         fetch_fn=fetch_apple_all_countries,
         info_fn=get_apple_app_info,
